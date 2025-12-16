@@ -1,4 +1,6 @@
 # Задача 3.
+from operator import itemgetter
+
 with open('exersice3/1.txt', 'r', encoding='utf-8') as file:
     list_1 = file.readlines()
 
@@ -15,33 +17,11 @@ def save_file(file_name: str, content: list):
         file.write(str(len(content)) + '\n')
         file.writelines(content)
         file.write('\n')
+list_files = [{'file_name': '1.txt', 'len': len(list_1), 'info': list_1}, {'file_name': '2.txt', 'len': len(list_2), 'info': list_2}, {'file_name': '3.txt', 'len': len(list_3), 'info': list_3}] # список словарей, содержащих имя файла и количество строк в нём
+list_files = sorted(list_files, key=itemgetter('len'))
 
-if len(list_1) == min([len(list_1), len(list_2), len(list_3)]):
-     if len(list_2) < len(list_3):
-         save_file('1.txt', list_1)
-         save_file('2.txt', list_2)
-         save_file('3.txt', list_3)
-     else:
-         save_file('1.txt', list_1)
-         save_file('3.txt', list_3)
-         save_file('2.txt', list_2)
-elif len(list_2) == min([len(list_1), len(list_2), len(list_3)]):
-    if len(list_1) < len(list_3):
-        save_file('2.txt', list_2)
-        save_file('1.txt', list_1)
-        save_file('3.txt', list_3)
-    else:
-        save_file('2.txt', list_2)
-        save_file('3.txt', list_3)
-        save_file('1.txt', list_1)
-else:
-    if len(list_1) < len(list_2):
-        save_file('3.txt', list_3)
-        save_file('1.txt', list_1)
-        save_file('2.txt', list_2)
-    else:
-        save_file('3.txt', list_3)
-        save_file('2.txt', list_2)
-        save_file('1.txt', list_1)
+for i in list_files:
+    save_file(i['file_name'], i['info'])
 
+print("Файл 'result.txt' успешно записан." )
 
